@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- REFERENCE ONLY: package skeleton for the Stage-2 ROS 2 port
+     (docs/05-simulation-setup.md). Not built in CI. -->
+<package format="3">
+  <name>uav_safe_sim_interface</name>
+  <version>0.1.0</version>
+  <description>Contract-bearing interfaces for the uav-safe-sim ROS 2 port</description>
+  <maintainer email="noreply@example.invalid">uav-safe-sim research</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>nav2_planner</exec_depend>
+  <exec_depend>px4_msgs</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

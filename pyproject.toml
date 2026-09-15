@@ -1,0 +1,12 @@
+[project]
+name = "uav-safe-sim"
+version = "0.1.0"
+description = "Experimental polyglot autonomous systems platform: research-grade, non-weaponized UAV simulation with an independent safety layer, contracts, provenance, and chaos testing"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+dependencies = ["numpy>=1.23"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

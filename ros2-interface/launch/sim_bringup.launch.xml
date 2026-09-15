@@ -1,0 +1,11 @@
+<launch>
+  <!-- REFERENCE ONLY: Stage-2 bringup sketch. Each sim.py block becomes
+       a node; uav_safety runs OUTSIDE the mission process and gates the
+       setpoint stream last (authority hierarchy, docs/01-architecture.md). -->
+  <node pkg="uav_safe_sim_interface" exec="uav_localizer" name="uav_localizer"/>
+  <node pkg="uav_safe_sim_interface" exec="uav_mapper" name="uav_mapper"/>
+  <node pkg="uav_safe_sim_interface" exec="uav_perception" name="uav_perception"/>
+  <node pkg="uav_safe_sim_interface" exec="uav_mission" name="uav_mission"/>
+  <node pkg="uav_safe_sim_interface" exec="uav_safety" name="uav_safety"/>
+  <node pkg="uav_safe_sim_interface" exec="uav_provenance" name="uav_provenance"/>
+</launch>

@@ -1,0 +1,19 @@
+# Reference configuration for Stage 2 (docs/05-simulation-setup.md).
+# PX4 SITL + ROS 2 bridge + Gazebo. Not exercised in CI yet.
+
+services:
+  px4-sitl:
+    image: px4io/px4-dev-simulation-focal:latest   # build PX4 SITL inside
+    command: make px4_sitl_default gzserver   # headless
+    ports:
+      - "8888:8888/udp"        # uXRCE-DDS agent
+  ros2:
+    image: ros:humble
+    depends_on: [px4-sitl]
+    # bridge node: subscribe fmu/out/*, publish fmu/in/*, uav_safety gate last
+    command: >
+      bash -c "source /opt/ros/humble/setup.bash &&
+      ros2 run micro_ros_agent micro_ros_agent udp --port 8888"
+  gazebo:
+    image: gazebosim/gazebo:gzserver11
+    depends_on: [px4-sitl]
