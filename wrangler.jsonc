@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "uav-safe-sim",
+  "compatibility_date": "2026-09-16",
+
+  // Static-assets-only Worker: `npx wrangler deploy` publishes ./public
+  // to uav-safe-sim.<account>.workers.dev — no Worker script needed.
+  "assets": {
+    "directory": "./public"
+  }
+}

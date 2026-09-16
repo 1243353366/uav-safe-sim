@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAV Safe Sim — Experimental Polyglot Autonomous Systems Platform</title>
+  <meta name="description" content="Research-grade, non-weaponized UAV simulation with an independent safety layer, contracts, provenance, and chaos testing.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0f1a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0f1a'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%2338bdf8' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%2338bdf8'/%3E%3Cpath d='M32 4v8M32 52v8M4 32h8M52 32h8' stroke='%2338bdf8' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+    :root { --bg: #0a0f1a; --surface: #101827; --border: #1f2d44; --text: #e6edf7; --muted: #8fa2bd; --accent: #38bdf8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+    header { border-bottom: 1px solid var(--border); background: rgba(10,15,26,0.9); position: sticky; top: 0; z-index: 10; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { font-family: ui-monospace, Menlo, monospace; font-weight: 700; letter-spacing: 0.06em; }
+    .brand a { color: var(--text); text-decoration: none; }
+    .brand .dot { color: var(--accent); }
+    .nav a.repo { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+    .nav a.repo:hover { color: var(--accent); }
+    .hero { padding: 84px 0 60px; text-align: center; }
+    .eyebrow { font-family: ui-monospace, Menlo, monospace; color: var(--accent); font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 16px; }
+    h1 { font-size: clamp(2rem, 6vw, 3.4rem); margin: 0 0 18px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; }
+    .hero p.sub { color: var(--muted); font-size: clamp(1rem, 2.4vw, 1.2rem); max-width: 60ch; margin: 0 auto 36px; }
+    .qa { border: 1px solid var(--border); background: var(--surface); border-radius: 14px; padding: 28px 32px; max-width: 720px; margin: 0 auto; text-align: left; }
+    .qa p { margin: 0; }
+    .qa .q { font-family: ui-monospace, Menlo, monospace; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .qa .a { color: var(--muted); }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 56px 0 8px; }
+    .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+    .stat b { font-size: 1.7rem; display: block; color: var(--accent); font-family: ui-monospace, Menlo, monospace; }
+    .stat span { color: var(--muted); font-size: 0.9rem; }
+    section { padding: 56px 0; }
+    h2 { font-size: 1.5rem; margin: 0 0 22px; letter-spacing: -0.01em; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; transition: border-color 0.2s, transform 0.2s; }
+    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .card h3 { margin: 0 0 4px; font-size: 1.05rem; }
+    .card .lang { font-family: ui-monospace, Menlo, monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; }
+    .card p { color: var(--muted); font-size: 0.92rem; margin: 8px 0 0; }
+    .docs a { display: block; color: var(--muted); text-decoration: none; padding: 12px 18px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; font-family: ui-monospace, Menlo, monospace; font-size: 0.88rem; transition: border-color 0.2s, color 0.2s; }
+    .docs a:hover { border-color: var(--accent); color: var(--accent); }
+    footer { border-top: 1px solid var(--border); padding: 32px 0 44px; color: var(--muted); font-size: 0.85rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--accent); }
+    @media (min-width: 640px) { .stats { grid-template-columns: repeat(4, 1fr); } .grid { grid-template-columns: repeat(3, 1fr); } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><a href="/">UAV<span class="dot">&middot;</span>SAFE<span class="dot">&middot;</span>SIM</a></div>
+      <a class="repo" href="https://github.com/1243353366/uav-safe-sim" target="_blank" rel="noopener">GitHub &nearrow;</a>
+    </div>
+  </header>
+
+  <div class="wrap hero">
+    <p class="eyebrow">Experimental Polyglot Autonomous Systems Platform</p>
+    <h1>Research-grade UAV simulation,<br>built to break on purpose.</h1>
+    <p class="sub">A non-weaponized UAV test environment studying whether an AI-assisted
+      development agent can construct and maintain a complex distributed autonomous-systems
+      architecture &mdash; with an independent safety layer, contracts, provenance, and chaos testing.</p>
+    <div class="qa">
+      <p class="q">Research question</p>
+      <p class="a">Can an AI-assisted development agent coordinate a heterogeneous
+        autonomous-system architecture spanning approximately 20 programming languages while
+        maintaining correctness, observability, reproducibility, and fault tolerance?
+        If the answer is &ldquo;no, and here is where it breaks&rdquo;, that is a result.</p>
+    </div>
+  </div>
+
+  <div class="wrap stats">
+    <div class="stat"><b>59</b><span>tests passing</span></div>
+    <div class="stat"><b>9</b><span>languages in play</span></div>
+    <div class="stat"><b>20</b><span>Python core modules</span></div>
+    <div class="stat"><b>Apache-2.0</b><span>license</span></div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <h2>Architecture &mdash; deliberate language specialization</h2>
+      <div class="grid">
+        <div class="card"><p class="lang">Python</p><h3>Simulation core</h3><p>Perception, fusion, planning, localization, mapping, safety, chaos &mdash; 20 modules under src/uav.</p></div>
+        <div class="card"><p class="lang">Rust</p><h3>Safety veto</h3><p>The independent safety layer that can always override the planner.</p></div>
+        <div class="card"><p class="lang">C / C++</p><h3>Sensor ABI &amp; flight controller</h3><p>Stable sensor ABI with a conformance harness, plus the flight controller.</p></div>
+        <div class="card"><p class="lang">Go</p><h3>Telemetry relay</h3><p>High-throughput telemetry transport between simulator and observers.</p></div>
+        <div class="card"><p class="lang">Haskell</p><h3>Mission FSM</h3><p>A mission state machine where illegal transitions are type errors, not runtime surprises.</p></div>
+        <div class="card"><p class="lang">TS / JS / SQL</p><h3>Dashboard, printers, schema</h3><p>Typed dashboard contracts, telemetry printers, and the canonical telemetry schema.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Documentation</h2>
+      <div class="docs">
+        <a href="https://github.com/1243353366/uav-safe-sim/blob/main/docs/01-architecture.md" target="_blank" rel="noopener">docs/01-architecture.md &mdash; system architecture</a>
+        <a href="https://github.com/1243353366/uav-safe-sim/blob/main/docs/04-failure-modes.md" target="_blank" rel="noopener">docs/04-failure-modes.md &mdash; how it fails, deliberately</a>
+        <a href="https://github.com/1243353366/uav-safe-sim/blob/main/docs/05-simulation-setup.md" target="_blank" rel="noopener">docs/05-simulation-setup.md &mdash; run it yourself</a>
+        <a href="https://github.com/1243353366/uav-safe-sim/blob/main/docs/09-experiment-log.md" target="_blank" rel="noopener">docs/09-experiment-log.md &mdash; experiment log</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      UAV Safe Sim &middot; Apache-2.0 &middot;
+      <a href="https://github.com/1243353366/uav-safe-sim" target="_blank" rel="noopener">github.com/1243353366/uav-safe-sim</a>
+      &middot; This is a research platform, not a drone project.
+    </div>
+  </footer>
+</body>
+</html>
