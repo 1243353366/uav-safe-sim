@@ -155,3 +155,7 @@ original. No code, model weights, or data from the studied repositories is
 included; their authors are credited in `CREDITS.md` and
 `THIRD_PARTY_NOTICES.md`. No attribution requirement of any dependency is
 currently triggered because no dependency code is redistributed.
+
+---
+
+Thanks for reading. More of my work: [github.com/1243353366](https://github.com/1243353366).
