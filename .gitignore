@@ -5,3 +5,6 @@ __pycache__/
 build/
 dist/
 .venv/
+
+# sandbox scratch files written by modal into the test directory
+tests/.modal-sandbox-fs-tools-tmp-*
